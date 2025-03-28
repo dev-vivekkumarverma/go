@@ -88,6 +88,59 @@ func string_function() {
 
 }
 
+func control_statement() {
+	availableTicket := 0
+	fmt.Print("Enter the num of availableTicket::")
+	fmt.Scan(&availableTicket)
+	for {
+		if availableTicket <= 0 {
+			break
+		}
+		var temp int
+		fmt.Print("Enter the ticket::")
+		fmt.Scan(&temp)
+		if temp < 1 {
+			fmt.Println("Invalid ticket entered !")
+			continue
+		}
+		if availableTicket >= temp {
+			availableTicket = availableTicket - temp
+			fmt.Println("Ticket Boocked !")
+
+		} else {
+			fmt.Println("Ooops...! you booked more tickets than available !")
+
+		}
+
+	}
+	fmt.Println("Tickets Exhausted !\nTry next time ")
+}
+
+func switch_case() {
+	var invalidCity bool = false
+	for {
+		var city string
+		fmt.Print("Enter destiation ticket::")
+		fmt.Scan(&city)
+
+		switch city {
+		case "Kolkata", "Hawrah":
+			fmt.Println("booking ticket for kolkata or Hawrah")
+
+		case "ballia", "siwan":
+			fmt.Println("Booking ticket for Ballia or Siwan")
+
+		default:
+			fmt.Println("Booking not started for ", city)
+			invalidCity = true
+		}
+		if invalidCity {
+			break
+		}
+	}
+
+}
+
 func main() {
 	// Variables
 	book_ticket()
@@ -101,4 +154,10 @@ func main() {
 	// string
 
 	string_function()
+
+	// control Statements
+	control_statement()
+
+	// switch statement
+	switch_case()
 }
