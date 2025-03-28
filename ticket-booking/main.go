@@ -1,7 +1,104 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
+
+func book_ticket() {
+	fmt.Println("hey this is Go Lang hello program.")
+	var firstName string
+	var lastName string
+	var email string
+	var totalTickets uint = 100
+	var remainingTicket uint
+	var tickets uint
+
+	fmt.Print("Enter first name::")
+	fmt.Scan(&firstName)
+	fmt.Print("Enter last name::")
+	fmt.Scan(&lastName)
+	fmt.Print("Enter email::")
+	fmt.Scan(&email)
+	fmt.Print("Number of ticket::")
+	fmt.Scan(&tickets)
+	if tickets <= totalTickets && tickets > 0 {
+		remainingTicket = totalTickets - tickets
+		fmt.Printf("Hi %v %v, your %v tickets have been booked and will be send to %v soon\n Happy booking..\n", firstName, lastName, tickets, email)
+		fmt.Printf("Available tickets are :: %v\n", remainingTicket)
+	} else {
+		remainingTicket = totalTickets
+		fmt.Println("You have requested for booking more than remaining tickets")
+		fmt.Printf("Remaining tickets are :: %v\n", remainingTicket)
+	}
+}
+
+func practice_slice() {
+	var numbers []int
+	var count int = 5
+
+	for i := 0; i < count; i++ {
+		var temp int
+		fmt.Printf("Enter %v element...", i+1)
+		fmt.Scan(&temp)
+		numbers = append(numbers, temp)
+	}
+
+	fmt.Print("Entire array::", numbers)
+
+	fmt.Print("Fist element::", numbers[0])
+}
+
+func practice_array() {
+	var numbers [10]int
+	var count int = 10
+
+	for i := 0; i < count; i++ {
+		fmt.Printf("Enter %v element...", i+1)
+		fmt.Scan(&numbers[i])
+	}
+
+	fmt.Print("Entire array::", numbers)
+
+	fmt.Print("Fist element::", numbers[0])
+
+}
+
+func string_function() {
+	fullNames := []string{}
+	count := 5
+	for i := 0; i < count; i++ {
+		var fistName string
+		var lastName string
+		fmt.Printf("Enter %v first name::\n", i+1)
+		fmt.Scan(&fistName)
+		fmt.Printf("Enter %v last name::\n", i+1)
+		fmt.Scan(&lastName)
+		fullNames = append(fullNames, fistName+" "+lastName)
+	}
+
+	firstNames := []string{}
+
+	for _, fullName := range fullNames {
+		names := strings.Fields(fullName)
+		firstNames = append(firstNames, names[0])
+	}
+
+	fmt.Print("All first Names are::", firstNames, "\n")
+
+}
 
 func main() {
-	fmt.Println("hey this is Go Lang hello program.")
+	// Variables
+	book_ticket()
+
+	// Array (fixed size)
+	practice_array()
+
+	// Slice (dynamic array)
+	practice_slice()
+
+	// string
+
+	string_function()
 }
