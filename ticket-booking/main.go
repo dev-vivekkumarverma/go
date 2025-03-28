@@ -142,6 +142,7 @@ func switch_case() {
 }
 
 func main() {
+
 	// Variables
 	book_ticket()
 
@@ -160,4 +161,11 @@ func main() {
 
 	// switch statement
 	switch_case()
+
+	// function with parameter
+	greetUser("Ramesh")
+}
+
+func greetUser(userName string) {
+	fmt.Printf("Hi %v,\nWelcome to ticket booking portal\n", userName)
 }
