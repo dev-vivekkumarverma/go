@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -164,8 +165,48 @@ func main() {
 
 	// function with parameter
 	greetUser("Ramesh")
+
+	// function with return value
+	num := 10.1
+	fmt.Printf("square of %v is %v\n", num, square(num))
+
+	// function with multiple returns
+	greet, strLen := say_hi("vivek")
+	fmt.Printf("%v\nstring  Len::%v\n", greet, strLen)
+
+	// use of map
+
+	fmt.Println(use_map("vivek", "verma", 20))
+
 }
 
 func greetUser(userName string) {
 	fmt.Printf("Hi %v,\nWelcome to ticket booking portal\n", userName)
+}
+
+// function with return values
+
+func square(l float64) float64 {
+	// returns the area of The square
+
+	return l * l
+}
+
+// function with Multiple returns
+
+func say_hi(name string) (string, int) {
+	var greeting string = "Hi " + name + ",\nHope you are having a Good day !"
+	return greeting, len(greeting)
+
+}
+
+// function to demonstrate the use of Map (dictionary in python).
+// Declare map using make for empty map declaration
+// go map[key_datatype]value_datatype
+func use_map(firstName string, lastName string, age int64) map[string]string {
+	var userData = make(map[string]string)
+	userData["firstName"] = firstName
+	userData["lastName"] = lastName
+	userData["age"] = strconv.FormatUint(uint64(age), 10)
+	return userData
 }
