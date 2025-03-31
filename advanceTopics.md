@@ -103,3 +103,7 @@ func main() {
 }
 ```
 
+---
+## Advance Level-2
+- covers `core concurrency patterns` in Go. 
+- <a href="./advance-2.md"><i>Click here</i></a>

@@ -4,7 +4,11 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"sync"
+	"time"
 )
+
+var WG = sync.WaitGroup{}
 
 func book_ticket() {
 	fmt.Println("hey this is Go Lang hello program.")
@@ -178,13 +182,34 @@ func main() {
 
 	fmt.Println(use_map("vivek", "verma", 20))
 
+	// Multi threding
+	WG.Add(1)
+	go greetUser("vivek kumar verma")
+	WG.Add(1)
+	go print_square(10.1)
+
+	WG.Add(1)
+	go greetUser("sarma verma")
+	WG.Add(1)
+	go print_square(20.1)
+	WG.Wait()
+
 }
 
 func greetUser(userName string) {
+	time.Sleep(5 * time.Second)
 	fmt.Printf("Hi %v,\nWelcome to ticket booking portal\n", userName)
+	WG.Done()
 }
 
 // function with return values
+
+func print_square(l float64) {
+	// print the area of The square
+	time.Sleep(10 * time.Second)
+	fmt.Printf("Area =%v\n", l*l)
+	WG.Done()
+}
 
 func square(l float64) float64 {
 	// returns the area of The square
