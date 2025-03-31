@@ -54,3 +54,9 @@ For any queries or discussions, feel free to reach out via GitHub issues.
 
 Happy Coding! 🚀
 
+
+<!-- get started -->
+
+## Let's get started with coding in Go
+- <a href="./findings.md"><i>click here</i></a>
+

@@ -298,4 +298,6 @@ func TestSum(t *testing.T) {
 }
 ```
 
-
+<!-- advance topics -->
+## Advance topics
+- <a href="./advanceTopics.md"><i>click here</i></a>
