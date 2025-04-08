@@ -1,7 +1,10 @@
 package main
 
 import (
+	"datatype_skill/chanpractice"
 	stringManipulation "datatype_skill/string"
+	"sync"
+
 	"fmt"
 	"strings"
 	"unicode/utf8"
@@ -101,4 +104,19 @@ func main() {
 	r, size := utf8.DecodeRune(b)
 	fmt.Printf("Rune: %c, Size: %d , value of rune: %v\n", r, size, r)
 
+	// chain practice
+
+	channel1 := make(chan string)
+	channel2 := make(chan string)
+	channel3 := make(chan string)
+	var wg sync.WaitGroup
+	wg.Add(6)
+	go chanpractice.SendMessage("Hey this message is a test of channel1 working.", channel1, &wg, 5)
+	go chanpractice.ReceiveMessage(channel1, &wg)
+	go chanpractice.SendMessage("Hey this message is a test of channel2 working.", channel2, &wg, 2)
+	go chanpractice.ReceiveMessage(channel2, &wg)
+	go chanpractice.SendMessage("Hey this message is a test of channel3 working.", channel3, &wg, 3)
+	go chanpractice.ReceiveMessage(channel3, &wg)
+
+	wg.Wait()
 }
