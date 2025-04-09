@@ -2,6 +2,7 @@ package main
 
 import (
 	"datatype_skill/chanpractice"
+	"datatype_skill/jsonhandling"
 	stringManipulation "datatype_skill/string"
 	"fmt"
 	"runtime"
@@ -165,6 +166,16 @@ func main() {
 	}
 	wg.Wait()
 	fmt.Println("✅ All tasks done. time taken ::", time.Since(start))
+
+	// json and struct
+	// using marshel for converting the json to struct with some constraints
+
+	person := jsonhandling.JsonToStruct()
+	fmt.Printf("\nvalue : %v and type : %T\n", person, person)
+	fmt.Println(person.Naam, person.Umar, person.Phone)
+	person.Phone = "13242534"
+	jsonString := jsonhandling.StructToJson(person)
+	fmt.Printf("\nvalue: %v | type : %T\n", jsonString, jsonString)
 }
 
 func worker(id int, jobs <-chan int, results chan<- int) {
