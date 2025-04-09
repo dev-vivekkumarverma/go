@@ -3,12 +3,24 @@ package main
 import (
 	"datatype_skill/chanpractice"
 	stringManipulation "datatype_skill/string"
-	"sync"
-
 	"fmt"
+	"runtime"
 	"strings"
+	"sync"
+	"time"
 	"unicode/utf8"
 )
+
+func heavyTask(id int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	start := time.Now()
+	fmt.Println("tasks ", id, "started at ::", start)
+	sum := 0
+	for i := 0; i < 1e9; i++ {
+		sum += i
+	}
+	fmt.Printf("🔧 Task %d finished in %v and sum is %d \n", id, time.Since(start), sum)
+}
 
 func main() {
 	fmt.Println(stringManipulation.GiveName())
@@ -119,4 +131,48 @@ func main() {
 	go chanpractice.ReceiveMessage(channel3, &wg)
 
 	wg.Wait()
+
+	// fan-in /fan-out
+	jobs := make(chan int, 5)
+	results := make(chan int, 5)
+
+	for w := 1; w <= 3; w++ {
+		go worker(w, jobs, results)
+	}
+
+	for j := 1; j <= 5; j++ {
+		jobs <- j
+	}
+	close(jobs)
+
+	for a := 1; a <= 5; a++ {
+		fmt.Println(<-results)
+	}
+
+	// multiprocessing using go routine
+
+	start := time.Now()
+	numCPUs := runtime.NumCPU()
+	fmt.Println("🧠 CPU cores available:", numCPUs)
+
+	// Allow Go runtime to use all available CPUs
+	runtime.GOMAXPROCS(numCPUs)
+
+	// var wg sync.WaitGroup
+	for i := 1; i <= numCPUs+100; i++ {
+		wg.Add(1)
+		go heavyTask(i, &wg)
+	}
+	wg.Wait()
+	fmt.Println("✅ All tasks done. time taken ::", time.Since(start))
+}
+
+func worker(id int, jobs <-chan int, results chan<- int) {
+	for j := range jobs {
+		fmt.Printf("Worker %d started job %d\n", id, j)
+		time.Sleep(time.Second)
+		fmt.Printf("Worker %d finished job %d\n", id, j)
+		results <- j * 2
+	}
+
 }
