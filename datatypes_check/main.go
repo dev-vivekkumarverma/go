@@ -2,6 +2,7 @@ package main
 
 import (
 	"datatype_skill/chanpractice"
+	"datatype_skill/interfacehandler"
 	"datatype_skill/jsonhandling"
 	stringManipulation "datatype_skill/string"
 	"fmt"
@@ -12,18 +13,63 @@ import (
 	"unicode/utf8"
 )
 
-func heavyTask(id int, wg *sync.WaitGroup) {
-	defer wg.Done()
-	start := time.Now()
-	fmt.Println("tasks ", id, "started at ::", start)
-	sum := 0
-	for i := 0; i < 1e9; i++ {
-		sum += i
-	}
-	fmt.Printf("🔧 Task %d finished in %v and sum is %d \n", id, time.Since(start), sum)
+func main() {
+
+	// interface
+
+	fmt.Println(interfacehandler.TESTTEXT)
+
+	r := Rectangle{l: 2.0, b: 3.0}
+	c := Circle{r: 5.0}
+	s := Square{a: 10.0}
+
+	PrintDimensions(r)
+	PrintDimensions(c)
+	PrintDimensions(s)
 }
 
-func main() {
+// use of interface with struct
+type Rectangle struct {
+	l, b float32
+}
+type Circle struct {
+	r float32
+}
+type Square struct {
+	a float32
+}
+
+func (r Rectangle) Area() float64 {
+	return float64(r.l) * float64(r.b)
+}
+
+func (r Rectangle) Circumference() float64 {
+	return 2 * (float64(r.l) + float64(r.b))
+}
+
+func (s Square) Area() float64 {
+	return float64(s.a) * float64(s.a)
+}
+
+func (s Square) Circumference() float64 {
+	return 4 * float64(s.a)
+}
+
+func (c Circle) Area() float64 {
+	return (22 / 7) * float64(c.r) * float64(c.r)
+}
+
+func (c Circle) Circumference() float64 {
+	return 2 * (22 / 7) * float64(c.r)
+}
+func PrintDimensions(s interfacehandler.Shape) {
+	fmt.Println("Area::", s.Area(), " sq units")
+	fmt.Println("Circumference::", s.Circumference(), " units")
+
+}
+
+// old data struncture function calls
+func oldTest() {
 	fmt.Println(stringManipulation.GiveName())
 	fmt.Println(stringManipulation.Concate("Vivek", " Verma"))
 	fmt.Println(len(stringManipulation.Concate("Vivek", " Verma")))
@@ -176,6 +222,21 @@ func main() {
 	person.Phone = "13242534"
 	jsonString := jsonhandling.StructToJson(person)
 	fmt.Printf("\nvalue: %v | type : %T\n", jsonString, jsonString)
+
+	// reverse of string
+	fmt.Println("reverse string of::", stringManipulation.ReveseString("Hello India"))
+
+}
+
+func heavyTask(id int, wg *sync.WaitGroup) {
+	defer wg.Done()
+	start := time.Now()
+	fmt.Println("tasks ", id, "started at ::", start)
+	sum := 0
+	for i := 0; i < 1e9; i++ {
+		sum += i
+	}
+	fmt.Printf("🔧 Task %d finished in %v and sum is %d \n", id, time.Since(start), sum)
 }
 
 func worker(id int, jobs <-chan int, results chan<- int) {
